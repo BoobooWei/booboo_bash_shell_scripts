@@ -1,0 +1,119 @@
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;
+/*!40019 SET @@session.max_insert_delayed_threads=0*/;
+/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;
+DELIMITER /*!*/;
+# at 4
+#160811 12:12:17 server id 1  end_log_pos 245 	Start: binlog v 4, server v 5.5.35-MariaDB-log created 160811 12:12:17
+# Warning: this binlog is either in use or was not closed properly.
+BINLOG '
+IfurVw8BAAAA8QAAAPUAAAABAAQANS41LjM1LU1hcmlhREItbG9nAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAEzgNAAgAEgAEBAQEEgAA2QAEGggAAAAICAgCAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAz+WSgw==
+'/*!*/;
+# at 245
+#160811 12:12:29 server id 1  end_log_pos 326 	Query	thread_id=2	exec_time=0	error_code=0
+SET TIMESTAMP=1470888749/*!*/;
+SET @@session.pseudo_thread_id=2/*!*/;
+SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0, @@session.unique_checks=1, @@session.autocommit=1/*!*/;
+SET @@session.sql_mode=0/*!*/;
+SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;
+/*!\C utf8 *//*!*/;
+SET @@session.character_set_client=33,@@session.collation_connection=33,@@session.collation_server=8/*!*/;
+SET @@session.lc_time_names=0/*!*/;
+SET @@session.collation_database=DEFAULT/*!*/;
+create database db2
+/*!*/;
+# at 326
+#160811 12:13:16 server id 1  end_log_pos 442 	Query	thread_id=2	exec_time=0	error_code=0
+SET TIMESTAMP=1470888796/*!*/;
+create table db2.t1 (id int primary key,name varchar(50))
+/*!*/;
+# at 442
+#160811 12:13:24 server id 1  end_log_pos 506 	Query	thread_id=2	exec_time=0	error_code=0
+SET TIMESTAMP=1470888804/*!*/;
+BEGIN
+/*!*/;
+# at 506
+# at 549
+#160811 12:13:24 server id 1  end_log_pos 549 	Table_map: `db2`.`t1` mapped to number 33
+#160811 12:13:24 server id 1  end_log_pos 604 	Write_rows: table id 33 flags: STMT_END_F
+
+BINLOG '
+ZPurVxMBAAAAKwAAACUCAAAAACEAAAAAAAEAA2RiMgACdDEAAgMPAjIAAg==
+ZPurVxcBAAAANwAAAFwCAAAAACEAAAAAAAEAAv/8AQAAAAhzdXBlcm1hbvwCAAAABmJhdG1hbg==
+'/*!*/;
+### INSERT INTO `db2`.`t1`
+### SET
+###   @1=1 /* INT meta=0 nullable=0 is_null=0 */
+###   @2='superman' /* VARSTRING(50) meta=50 nullable=1 is_null=0 */
+### INSERT INTO `db2`.`t1`
+### SET
+###   @1=2 /* INT meta=0 nullable=0 is_null=0 */
+###   @2='batman' /* VARSTRING(50) meta=50 nullable=1 is_null=0 */
+# at 604
+#160811 12:13:24 server id 1  end_log_pos 631 	Xid = 6
+COMMIT/*!*/;
+# at 631
+#160811 12:13:31 server id 1  end_log_pos 695 	Query	thread_id=2	exec_time=0	error_code=0
+SET TIMESTAMP=1470888811/*!*/;
+BEGIN
+/*!*/;
+# at 695
+# at 738
+#160811 12:13:31 server id 1  end_log_pos 738 	Table_map: `db2`.`t1` mapped to number 33
+#160811 12:13:31 server id 1  end_log_pos 812 	Update_rows: table id 33 flags: STMT_END_F
+
+BINLOG '
+a/urVxMBAAAAKwAAAOICAAAAACEAAAAAAAEAA2RiMgACdDEAAgMPAjIAAg==
+a/urVxgBAAAASgAAACwDAAAAACEAAAAAAAEAAv///AEAAAAIc3VwZXJtYW78AQAAAANsZW/8AgAA
+AAZiYXRtYW78AgAAAANsZW8=
+'/*!*/;
+### UPDATE `db2`.`t1`
+### WHERE
+###   @1=1 /* INT meta=0 nullable=0 is_null=0 */
+###   @2='superman' /* VARSTRING(50) meta=50 nullable=1 is_null=0 */
+### SET
+###   @1=1 /* INT meta=0 nullable=0 is_null=0 */
+###   @2='leo' /* VARSTRING(50) meta=50 nullable=1 is_null=0 */
+### UPDATE `db2`.`t1`
+### WHERE
+###   @1=2 /* INT meta=0 nullable=0 is_null=0 */
+###   @2='batman' /* VARSTRING(50) meta=50 nullable=1 is_null=0 */
+### SET
+###   @1=2 /* INT meta=0 nullable=0 is_null=0 */
+###   @2='leo' /* VARSTRING(50) meta=50 nullable=1 is_null=0 */
+# at 812
+#160811 12:13:31 server id 1  end_log_pos 839 	Xid = 7
+COMMIT/*!*/;
+# at 839
+#160811 12:13:36 server id 1  end_log_pos 903 	Query	thread_id=2	exec_time=0	error_code=0
+SET TIMESTAMP=1470888816/*!*/;
+BEGIN
+/*!*/;
+# at 903
+# at 946
+#160811 12:13:36 server id 1  end_log_pos 946 	Table_map: `db2`.`t1` mapped to number 33
+#160811 12:13:36 server id 1  end_log_pos 993 	Delete_rows: table id 33 flags: STMT_END_F
+
+BINLOG '
+cPurVxMBAAAAKwAAALIDAAAAACEAAAAAAAEAA2RiMgACdDEAAgMPAjIAAg==
+cPurVxkBAAAALwAAAOEDAAAAACEAAAAAAAEAAv/8AQAAAANsZW/8AgAAAANsZW8=
+'/*!*/;
+### DELETE FROM `db2`.`t1`
+### WHERE
+###   @1=1 /* INT meta=0 nullable=0 is_null=0 */
+###   @2='leo' /* VARSTRING(50) meta=50 nullable=1 is_null=0 */
+### DELETE FROM `db2`.`t1`
+### WHERE
+###   @1=2 /* INT meta=0 nullable=0 is_null=0 */
+###   @2='leo' /* VARSTRING(50) meta=50 nullable=1 is_null=0 */
+# at 993
+#160811 12:13:36 server id 1  end_log_pos 1020 	Xid = 8
+COMMIT/*!*/;
+DELIMITER ;
+# End of log file
+ROLLBACK /* added by mysqlbinlog */;
+/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;
