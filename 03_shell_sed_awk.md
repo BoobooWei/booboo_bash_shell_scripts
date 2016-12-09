@@ -1,28 +1,6 @@
 ## Sed 命令
 
-
-- [Sed 命令](#sed-命令)
-- [sed](#sed)
-	- [什么是sed](#什么是sed)
-	- [如何使用sed](#如何使用sed)
-		- [语法模式](#语法模式)
-		- [sed命令的原理](#sed命令的原理)
-		- [sed命令的用法](#sed命令的用法)
-		- [课堂练习](#课堂练习)
-		- [课堂练习](#课堂练习)
-		- [课后习题](#课后习题)
-- [awk](#awk)
-	- [简介](#简介)
-	- [使用方法](#使用方法)
-	- [调用awk](#调用awk)
-	- [入门实例](#入门实例)
-  - [awk内置变量](#awk内置变量)
-  - [print和printf](#print和printf)
-	- [awk编程](#awk编程)
-	- [变量和赋值](#变量和赋值)
-	- [条件语句](#条件语句)
-	- [循环语句](#循环语句)
-	- [数组](#数组)
+[TOC]
 
 ## sed
 
@@ -280,31 +258,32 @@ blue,/bin/nosh
 
 awk工作流程是这样的：先执行BEGING，然后读取文件，读入有/n换行符分割的一条记录，然后将记录按指定的域分隔符划分域，填充域，$0则表示所有域,$1表示第一个域,$n表示第n个域,随后开始执行模式所对应的动作action。接着开始读入第二条记录······直到所有的记录都读完，最后执行END操作。
 
-
-
 搜索/etc/passwd有root关键字的所有行
+
 ```shell
 #awk -F: '/root/' /etc/passwd
 root:x:0:0:root:/root:/bin/bash
 ```
+
 这种是pattern的使用示例，匹配了pattern(这里是root)的行才会执行action(没有指定action，默认输出每行的内容)。
 
 搜索支持正则，例如找root开头的: awk -F: '/^root/' /etc/passwd
 
 
-
 搜索/etc/passwd有root关键字的所有行，并显示对应的shell
+
 ```shell
 # awk -F: '/root/{print $7}' /etc/passwd             
 /bin/bash
 ```
- 这里指定了action{print $7}
+
+这里指定了action{print $7}
 
 
 ### awk内置变量
 
 awk有许多内置变量用来设置环境信息，这些变量可以被改变，下面给出了最常用的一些变量。
-复制代码
+
 
 ```shell
 ARGC               命令行参数个数
@@ -322,7 +301,7 @@ RS                 控制记录分隔符
 
 
 
- 此外,$0变量是指整条记录。$1表示当前行的第一个域,$2表示当前行的第二个域,......以此类推。
+此外,$0变量是指整条记录。$1表示当前行的第一个域,$2表示当前行的第二个域,......以此类推。
 
 
 
@@ -357,6 +336,7 @@ printf函数，其用法和c语言中printf基本相似,可以格式化字符串
 除了awk的内置变量，awk还可以自定义变量。
 
 下面统计/etc/passwd的账户人数
+
 ```shell
 awk '{count++;print $0;} END{print "user count is ", count}' /etc/passwd
 root:x:0:0:root:/root:/bin/bash
@@ -365,9 +345,8 @@ user count is  40
 ```
 count是自定义变量。之前的action{}里都是只有一个print,其实print只是一个语句，而action{}可以有多个语句，以;号隔开。
 
-
-
 这里没有初始化count，虽然默认是0，但是妥当的做法还是初始化为0:
+
 ```shell
 awk 'BEGIN {count=0;print "[start]user count is ", count} {count=count+1;print $0;} END{print "[end]user count is ", count}' /etc/passwd
 [start]user count is  0
@@ -376,8 +355,8 @@ root:x:0:0:root:/root:/bin/bash
 [end]user count is  40
 ```
 
-
 统计某个文件夹下的文件占用的字节数
+
 ```shell
 ls -l |awk 'BEGIN {size=0;} {size=size+$5;} END{print "[end]size is ", size}'
 [end]size is  8657198
@@ -385,17 +364,19 @@ ls -l |awk 'BEGIN {size=0;} {size=size+$5;} END{print "[end]size is ", size}'
 
 
 如果以M为单位显示:
+
 ```shell
 ls -l |awk 'BEGIN {size=0;} {size=size+$5;} END{print "[end]size is ", size/1024/1024,"M"}'
 [end]size is  8.25889 M
 ```
+
 注意，统计不包括文件夹的子目录。
 
 
 
 #### 条件语句
 
- awk中的条件语句是从C语言中借鉴来的，见如下声明方式：
+awk中的条件语句是从C语言中借鉴来的，见如下声明方式：
 
 ```shell
 if (expression) {
@@ -420,9 +401,8 @@ if (expression) {
 ```
 
 
-
-
 统计某个文件夹下的文件占用的字节数,过滤4096大小的文件(一般都是文件夹):
+
 ```shell
 ls -l |awk 'BEGIN {size=0;print "[start]size is ", size} {if($5!=4096){size=size+$5;}} END{print "[end]size is ", size/1024/1024,"M"}'
 [end]size is  8.22339 M
@@ -437,11 +417,12 @@ awk中的循环语句同样借鉴于C语言，支持while、do/while、for、bre
 
 #### 数组
 
-  因为awk中数组的下标可以是数字和字母，数组的下标通常被称为关键字(key)。值和关键字都存储在内部的一张针对key/value应用hash的表格里。由于hash不是顺序存储，因此在显示数组内容时会发现，它们并不是按照你预料的顺序显示出来的。数组和变量一样，都是在使用时自动创建的，awk也同样会自动判断其存储的是数字还是字符串。一般而言，awk中的数组用来从记录中收集信息，可以用于计算总和、统计单词以及跟踪模板被匹配的次数等等。
+因为awk中数组的下标可以是数字和字母，数组的下标通常被称为关键字(key)。值和关键字都存储在内部的一张针对key/value应用hash的表格里。由于hash不是顺序存储，因此在显示数组内容时会发现，它们并不是按照你预料的顺序显示出来的。数组和变量一样，都是在使用时自动创建的，awk也同样会自动判断其存储的是数字还是字符串。一般而言，awk中的数组用来从记录中收集信息，可以用于计算总和、统计单词以及跟踪模板被匹配的次数等等。
 
 
 
 显示/etc/passwd的账户
+
 ```shell
 awk -F ':' 'BEGIN {count=0;} {name[count] = $1;count++;}; END{for (i = 0; i < NR; i++) print i, name[i]}' /etc/passwd
 0 root
@@ -453,9 +434,6 @@ awk -F ':' 'BEGIN {count=0;} {name[count] = $1;count++;}; END{for (i = 0; i < NR
 ......
 ```
 
-
 这里使用for循环遍历数组
-
-
 
 awk编程的内容极多，这里只罗列简单常用的用法，更多请参考 http://www.gnu.org/software/gawk/manual/gawk.html

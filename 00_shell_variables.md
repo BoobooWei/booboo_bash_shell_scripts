@@ -1,29 +1,7 @@
 # Shell Scripts
 
-- [Shell Scripts](#shell-scripts)
-	- [教学环境介绍](#教学环境介绍)
-	- [shell 简介](#shell-简介)
-		- [什么是 shell](#什么是-shell)
-		- [shell 历史](#shell-历史)
-		- [常见的 shell](#常见的-shell)
-		- [为什么 Shell](#为什么-shell)
-	- [shell的变量功能](#shell的变量功能)
-		- [什么是变量](#什么是变量)
-		- [变量的设置、查看和取消 echo unset](#变量的设置查看和取消-echo-unset)
-			- [课堂练习](#课堂练习)
-		- [变量内容的删除和替换](#变量内容的删除和替换)
-			- [课堂练习](#课堂练习)
-		- [变量的分类：局部变量和全局变量 env set export](#变量的分类局部变量和全局变量-env-set-export)
-			- [课堂练习](#课堂练习)
-		- [变量读取、数组与宣告 read array declare](#变量读取数组与宣告-read-array-declare)
-			- [课堂练习](#课堂练习)
-	- [数据流重导向redirection](#数据流重导向redirection)
-		- [何谓数据流重导向](#何谓数据流重导向)
-			- [课堂练习](#课堂练习)
-		- [命令执行的判断依据 ; && ||](#命令执行的判断依据-)
-			- [课堂实验](#课堂实验)
-		- [管道命令pipe](#管道命令pipe)
-		- [shell下的特殊符号](#shell下的特殊符号)
+[TOC]
+
 ---
 ## 教学环境介绍
 
@@ -31,7 +9,9 @@
 * server rhel7.2 172.25.0.11
 
 如果真的想走IT这条路，想真正管理好你的主机，那么学习自动化管理工具Shell Scripts 非常重要！
+
 就是将一些命令放在一起去执行，并且不需要编译就能执行，很方便，所以在日常工作中可以用shell scripts来简化我们的管理。可以但到我们linux中，很多服务的启动都是透过shell脚本来启动的。
+
 如果你不会脚本，那么服务器出问题的时候，真的会求助无门，所以好好地学习吧！
 
 ## shell 简介
@@ -42,47 +22,30 @@ Shell 是一个命令解释器 , 是人与操作系统之间的桥梁。
 
 ![03.png](pic/03.png)
 
-我们平时无论任何操作 , 最终都要操作硬件 , 比如输入一个字符 “ a ”, 那么信号 首先会从键盘传递到主板 , 通过
-主板总线传递到内存 ,CPU, 显卡等 , 最终经过显卡的运 算完成后在屏幕的某个位置 , 显示一个特定字体的字符 “
-a ”, 这一整个过程可以说是 不断的和硬件打交道了 , 但是如果让人去发送这些硬件操作码显然不适合 , 因为这不
-是人干 的事 , 所以我们有了操作系统 , 操作系统通过加载一定的硬件驱动 , 从而控制硬件 , 操作硬 件 , 那剩下的事
-就是如何和操作系统通信了 , 对于普通的系统管理员来说 , 这也是一件非常 困难的事 , 为了方便人和操作系统沟
-通 , 我们开发了 shell 。
+我们平时无论任何操作 , 最终都要操作硬件 , 比如输入一个字符 “ a ”, 那么信号 首先会从键盘传递到主板 , 通过主板总线传递到内存 ,CPU, 显卡等 , 最终经过显卡的运 算完成后在屏幕的某个位置 , 显示一个特定字体的字符 “a ”, 这一整个过程可以说是 不断的和硬件打交道了 , 但是如果让人去发送这些硬件操作码显然不适合 , 因为这不是人干 的事 , 所以我们有了操作系统 , 操作系统通过加载一定的硬件驱动 , 从而控制硬件 , 操作硬 件 , 那剩下的事就是如何和操作系统通信了 , 对于普通的系统管理员来说 , 这也是一件非常 困难的事 , 为了方便人和操作系统沟通 , 我们开发了 shell 。
 
-Shell 可以将我们平时运行的一些指令解释给操作系统执行 , 方便管理员操作系统。 而 Shell 的脚本其实是一
-种命令的堆积 , 我们将所有需要执行的命令 , 以从上至下的方 式写在一个文件当中 , 交给 shell 去自动解释执行。
+Shell 可以将我们平时运行的一些指令解释给操作系统执行 , 方便管理员操作系统。 而 Shell 的脚本其实是一种命令的堆积 , 我们将所有需要执行的命令 , 以从上至下的方 式写在一个文件当中 , 交给 shell 去自动解释执行。
 
 ### shell 历史
 
-在 AT&T 的 Dennis Ritchie 和 Ken Thompson 设计 UNIXTM 的时候 , 他们想要为 用户创建一种与他们的
-新系统交流的方法。 那时的操作系统带有命令解释器。命令解释器接受用户的命令 , 然后解释它们 , 因而计 算
-机可以使用这些命令。
+在 AT&T 的 Dennis Ritchie 和 Ken Thompson 设计 UNIXTM 的时候 , 他们想要为 用户创建一种与他们的新系统交流的方法。 那时的操作系统带有命令解释器。命令解释器接受用户的命令 , 然后解释它们 , 因而计 算机可以使用这些命令。
 
-但是 Ritchie 和 Thompson 想要的不只是这些功能 , 他们想提供比当时的命令解释器 具备更优异功能的工具。
-这导致了 Bourne shell( 通称为 sh) 的开发 , 由 S.R. Bourne 创 建。自从 Bourne shell 的创建 , 其它 shell 也被一一开发 , 如 C shell(csh) 和 Korn shell(ksh) 。
+但是 Ritchie 和 Thompson 想要的不只是这些功能 , 他们想提供比当时的命令解释器 具备更优异功能的工具。这导致了 Bourne shell( 通称为 sh) 的开发 , 由 S.R. Bourne 创 建。自从 Bourne shell 的创建 , 其它 shell 也被一一开发 , 如 C shell(csh) 和 Korn shell(ksh) 。
 
-当自由软件基金会想寻求一种免费的 shell, 开发者们开始致力于 Bourne shell 以及当 时其它 shell 中某些很
-受欢迎的功能背后的语言。
+当自由软件基金会想寻求一种免费的 shell, 开发者们开始致力于 Bourne shell 以及当 时其它 shell 中某些很受欢迎的功能背后的语言。
 
-这个开发结果是 Bourne Again Shell, 或称 bash 。虽然你的 Red Hat Linux 包括几 种不同的 shell,bash 是
-为互动用户提供的默认 shell 。
+这个开发结果是 Bourne Again Shell, 或称 bash 。虽然你的 Red Hat Linux 包括几 种不同的 shell,bash 是为互动用户提供的默认 shell 。
 
 ### 常见的 shell
 
 * Bourne shell 即 sh:AT&T 贝尔实验室编写的一个交换式的命令解释器。
-* C Shell :Bill Joy 于 20 世纪 80 年代早期开发。为了让用户更容易的使用 , 他把语法 结构变成了 C 语言风格。
-它新增了命令历史、别名、文件名替换、作业控制等功能。
-* korn shell (ksh) 是一个 Unix shell 。它由贝尔实验室的 David Korn 在二十世纪八十 年代早期编写。它
-完全向上兼容 Bourne shell 并包含了 C shell 的很多特性。
-* Bourne-Again Shell: bash 是一个为 GNU 项目编写的 Unix shell 。它的名字是一 系列缩写 :Bourne-
-Again SHell — 这是关于 Bourne shell(sh) 的一个双关语 (Bourne again / born again) 。 Bourne shell 是一个早期的重要 shell, 由 Stephen Bourne 在 1978 年前后编写 , 并同 Version 7 Unix 一起发布。 bash 则在1987 年由 Brian Fox 创造。 在 1990 年 ,Chet Ramey 成为了主要的维护者。 bash 是大多数 Linux 系统以
-及 Mac OS X v10.4 默认的 shell, 它能运行于大多数 Unix 风格的操作系统之上 , 甚至被移植到了 Microsoft
-Windows 上的 Cygwin 和 MSYS 系统中 , 以实现 windows 的 POSIX 虚拟接口。此外 , 它也被 DJGPP 项
-目移植到了 MS- DOS 上。
-* POSIX shell :POSIX shell 与 Korn shell 非常的相似 , 当前提供 POSIX shell 的最 大卖主是 Hewlett-
-Packard 。
+* C Shell :Bill Joy 于 20 世纪 80 年代早期开发。为了让用户更容易的使用 , 他把语法 结构变成了 C 语言风格。它新增了命令历史、别名、文件名替换、作业控制等功能。
+* korn shell (ksh) 是一个 Unix shell 。它由贝尔实验室的 David Korn 在二十世纪八十 年代早期编写。它完全向上兼容 Bourne shell 并包含了 C shell 的很多特性。
+* Bourne-Again Shell: bash 是一个为 GNU 项目编写的 Unix shell 。它的名字是一 系列缩写 :Bourne-Again SHell — 这是关于 Bourne shell(sh) 的一个双关语 (Bourne again / born again) 。 Bourne shell 是一个早期的重要 shell, 由 Stephen Bourne 在 1978 年前后编写 , 并同 Version 7 Unix 一起发布。 bash 则在1987 年由 Brian Fox 创造。 在 1990 年 ,Chet Ramey 成为了主要的维护者。 bash 是大多数 Linux 系统以及 Mac OS X v10.4 默认的 shell, 它能运行于大多数 Unix 风格的操作系统之上 , 甚至被移植到了 MicrosoftWindows 上的 Cygwin 和 MSYS 系统中 , 以实现 windows 的 POSIX 虚拟接口。此外 , 它也被 DJGPP 项目移植到了 MS- DOS 上。
+* POSIX shell :POSIX shell 与 Korn shell 非常的相似 , 当前提供 POSIX shell 的最 大卖主是 Hewlett-Packard 。
 
 ### 为什么 Shell
+
 • 解决重复操作的作业。
 • 节约时间 , 提高工作效率。
 • 功能强大 , 使用简单。
@@ -131,6 +94,7 @@ grep batman /etc/passwd
 ~/.bashrc end
 ~/.bash_profile end
 ```
+
 ## shell的变量功能
 
 ### 什么是变量
@@ -192,7 +156,6 @@ grep batman /etc/passwd
 #### 课堂练习
 
 1. 设置变量path=${PATH} 并查看；
-
 2. 设置变量path=/batman/bin:${path}:/superman/bin 并查看；
 3. 读取变量的时候将/batman/bin:及第一个冒号及之前的删除；
 4. 读取变量的时候将最后一个冒号及之前的都删除；
